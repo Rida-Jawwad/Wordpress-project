@@ -169,7 +169,10 @@ jQuery(function($) {
         window.location.hash = hash;
       });
 
-    });
+	});
+	$(".site-mobile-menu").on("touchstart", function(event) {
+		window.location.href = $(event.target).attr('href');
+	  });
   };
   OnePageNavigation();
 
@@ -260,5 +263,32 @@ jQuery(function($) {
 
 	}
 	quillInit();
+
+	if ( $('.prev.page-numbers').length > 0 ) {
+		$( ".prev.page-numbers" ).text( "Prev" );
+	}
+	if ( $('.next.page-numbers').length > 0 ) {
+		$( ".next.page-numbers" ).text( "Next" );
+	}
+	function doStuff(elements) {
+		if ( $('.h5.d-flex.align-items-center.mb-4.text-primary').length > 0 ) {
+			$( ".h5.d-flex.align-items-center.mb-4.text-primary" ).next().addClass( "list-unstyled m-0 p-0" );
+		}
+		if ( $('ul.list-unstyled.m-0.p-0').length > 0 ) {
+			$( "ul.list-unstyled.m-0.p-0" ).find( "li" ).addClass( "d-flex align-items-start mb-2" );
+		}
+		if ( $('li.d-flex.align-items-start.mb-2').length > 0 ) {
+			$( "li.d-flex.align-items-start.mb-2" ).prepend( '<span class="icon-check_circle mr-2 text-muted"></span>' );
+		}
+	  }
+	  
+	  $(function() {
+		var truncates = $('section.single-job-page');
+	  
+		if (truncates.length) { // here you validate if there is any element with that class
+		  doStuff(truncates);
+		}
+	  });
+	
   
 });

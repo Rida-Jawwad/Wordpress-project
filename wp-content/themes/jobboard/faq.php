@@ -79,6 +79,11 @@ get_header();
       </div>
     </section>
 
+    <?php 
+$candidates = new WP_Query( array( 'post_type' => 'candidates' ) );  
+$published_posts = wp_count_posts('candidates')->publish;        
+if ( $candidates->have_posts() && $published_posts > 1) { ?>     
+
     <section class="site-section bg-light">
       <div class="container">
         <div class="row mb-5">
@@ -87,40 +92,33 @@ get_header();
           </div>
         </div>
         <div class="row">
+        <?php 
+          $args = array('post_type' => 'candidates' );
+          $the_query = new WP_Query($args);
+          while ($the_query -> have_posts()): $the_query -> the_post();
+          ?> 
           <div class="col-lg-6">
             <div class="block__87154 bg-white rounded">
               <blockquote>
-                <p>&ldquo;Ipsum harum assumenda in eum vel eveniet numquam cumque vero vitae enim cupiditate deserunt eligendi officia modi consectetur. Expedita tempora quos nobis earum hic ex asperiores quisquam optio nostrum sit&rdquo;</p>
+                <p><?php the_field('candidate_saying'); ?></p>
               </blockquote>
               <div class="block__91147 d-flex align-items-center">
-                <figure class="mr-4"><img src="<?php echo get_template_directory_uri(); ?>/images/person_1.jpg" alt="Image" class="img-fluid"></figure>
+                <figure class="mr-4"><img src="<?php the_field('candidate_image'); ?>" alt="Image" class="img-fluid"></figure>
                 <div>
-                  <h3>Elisabeth Smith</h3>
-                  <span class="position">Creative Director</span>
+                  <h3><?php the_field('candidate_name'); ?></h3>
+                  <span class="position"><?php the_field('candidate_role'); ?></span>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-6">
-            <div class="block__87154 bg-white rounded">
-              <blockquote>
-                <p>&ldquo;Ipsum harum assumenda in eum vel eveniet numquam, cumque vero vitae enim cupiditate deserunt eligendi officia modi consectetur. Expedita tempora quos nobis earum hic ex asperiores quisquam optio nostrum sit&rdquo;</p>
-              </blockquote>
-              <div class="block__91147 d-flex align-items-center">
-                <figure class="mr-4"><img src="<?php echo get_template_directory_uri(); ?>/images/person_2.jpg" alt="Image" class="img-fluid"></figure>
-                <div>
-                  <h3>Chris Peter</h3>
-                  <span class="position">Web Designer</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          <?php endwhile; ?>
 
         </div>
       </div>
     </section>
+    <?php
+      }  
+    ?>
     <?php
 // get_sidebar();
 get_footer();
